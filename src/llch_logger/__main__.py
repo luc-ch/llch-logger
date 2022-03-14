@@ -1,13 +1,14 @@
 import argparse
 
-import llch_logger
+from . import Logger
+from ._version import __version__
 
 if __name__ == "__main__":
     levels = ["info", "warn", "error", "debug", "audit", "raw"]
 
     parser = argparse.ArgumentParser(
         description=f"""
-    Sends logging messages [llch_logger {llch_logger.__version__}]
+    Sends logging messages [llch_logger {__version__}]
 
     By default, it sends an information message.
     """
@@ -38,7 +39,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    logger = llch_logger.Logger(config_file=args.config)
+    logger = Logger(config_file=args.config)
 
     for level in levels:
         if getattr(args, level):

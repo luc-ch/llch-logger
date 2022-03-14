@@ -112,14 +112,12 @@ class Logger(metaclass=SingletonMeta):
         log["header"]["host"] = {}
         log["header"]["host"]["name"] = self.config.hostname
         log["header"]["host"]["ip"] = self.config.container_ip
-        log["payload"] = {}
-        log["payload"]["message"] = msg
         if len(self.execution_metadata) > 0 or isinstance(extra, dict):
-            log["payload"]["additionalFields"] = {}
+            log["metadata"] = {}
             if len(self.execution_metadata) > 0:
-                log["payload"]["additionalFields"].update(self.execution_metadata)
+                log["metadata"].update(self.execution_metadata)
             if isinstance(extra, dict):
-                log["payload"]["additionalFields"].update(extra)
+                log["metadata"].update(extra)
         return log
 
     def _create_audit_logger(self, json_formatter):

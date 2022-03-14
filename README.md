@@ -69,14 +69,11 @@ write_to_stdout = true
     "source": { "version": "0.1.1", "appName": "unittest.suite" },
     "host": { "name": "xxxxxxxxxx", "ip": "xxx.xxx.xx.xx" }
   },
-  "payload": {
-    "message": "Sending a message",
-    "additionalFields": {
-      "metadata1": "metadata1",
-      "metadata2": 22,
-      "metadata3": "",
-      "metadata4": null
-    }
+  "metadata": {
+    "metadata1": "metadata1",
+    "metadata2": 22,
+    "metadata3": "",
+    "metadata4": null
   },
   "type": "INFO"
 }
