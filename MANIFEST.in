@@ -1,2 +1,3 @@
 include project.version
 include README.md
+include src/llch_logger/defaults/default.ini
