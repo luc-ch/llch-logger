@@ -33,7 +33,7 @@ optional arguments:
 
 ```sh
 python3 -m llch_logger -m "INFORMATION message to be saved"
-python3 -m llch_logger -A -m "AUDITOR message to be saved"
+python3 -m llch_logger -A -m "Logger message to be saved"
 python3 -m llch_logger -R -m "RAW message to be saved"
 ```
 
@@ -45,7 +45,7 @@ from llch_logger import Logger
 logger = Logger()
 logger.set_execution_metadata({"metadata1": "metadata1", "metadata2": 22,  "metadata3": "", "metadata4": None})
 logger.info("INFORMATION message to be sent")
-logger.audit("AUDITOR message to be sent")
+logger.audit("Logger message to be sent")
 ```
 
 ### config.ini

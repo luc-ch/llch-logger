@@ -4,7 +4,7 @@ from . import Logger
 from ._version import __version__
 
 if __name__ == "__main__":
-    levels = ["info", "warn", "error", "debug", "audit", "raw"]
+    levels = ["info", "warn", "error", "critical", "debug", "audit", "raw"]
 
     parser = argparse.ArgumentParser(
         description=f"""

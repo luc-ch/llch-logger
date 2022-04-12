@@ -1,8 +1,10 @@
 import datetime
 import inspect
-import logging
 import os
 import uuid
+
+import logging
+from logging.handlers import TimedRotatingFileHandler
 
 from pythonjsonlogger import jsonlogger
 
@@ -81,6 +83,9 @@ class Logger(metaclass=SingletonMeta):
     def error(self, msg, extra=None):
         self._log(logging.ERROR, msg, extra)
 
+    def critical(self, msg, extra=None):
+        self._log(logging.CRITICAL, msg, extra)
+
     def audit(self, msg, extra=None):
         log = self._create_base_log(msg, extra)
         self.audit_logger.log(Logger.AUDIT_LEVEL_NUM, log)
@@ -133,6 +138,7 @@ class Logger(metaclass=SingletonMeta):
         audit_handler = logging.FileHandler(
             os.path.join(self.config.log_folder, f"audit-{self.app_name}.log"),
             encoding="utf-8",
+            delay=True,
         )
         audit_handler.setFormatter(json_formatter)
         audit_logger.addHandler(audit_handler)
@@ -144,6 +150,7 @@ class Logger(metaclass=SingletonMeta):
         log_handler = logging.FileHandler(
             os.path.join(self.config.log_folder, f"log-{self.app_name}.log"),
             encoding="utf-8",
+            delay=True,
         )
         log_handler.setFormatter(json_formatter)
         log_logger.addHandler(log_handler)
@@ -157,9 +164,11 @@ class Logger(metaclass=SingletonMeta):
         raw_logger = logging.getLogger("Raw")
         raw_logger.setLevel(Logger.RAW_LEVEL_NUM)
         raw_logger.raw = raw
-        raw_handler = logging.FileHandler(
-            os.path.join(self.config.log_folder, f"raw-{self.app_name}.txt"),
-            encoding="utf-8",
+        raw_handler = TimedRotatingFileHandler(
+            os.path.join(self.config.log_folder, "raw.txt"),
+            delay=True,
+            when="M",
+            interval=1,
         )
         raw_handler.setFormatter(logging.Formatter("%(message)s"))
         raw_logger.addHandler(raw_handler)
@@ -175,7 +184,7 @@ class Logger(metaclass=SingletonMeta):
             stream_logger.addHandler(stream_handler)
         return stream_logger
 
-    def _create_all_loggers(self,):
+    def _create_all_loggers(self):
         try:
             os.makedirs(self.config.log_folder, exist_ok=True)
         except Exception as e:
